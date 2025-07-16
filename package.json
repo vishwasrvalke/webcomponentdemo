@@ -1,0 +1,22 @@
+{
+    "name": "webcomponentdemo",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "build:lib": "vite build --mode lib",
+        "preview": "vite preview",
+        "setup:angular": "npm run build:lib && cd examples/angular-demo && npm install && ln -sf ../../../dist node_modules/webcomponent-lib",
+        "setup:react": "npm run build:lib && cd examples/react-demo && npm install",
+        "dev:react": "cd examples/react-demo && npm start",
+        "build:react": "cd examples/react-demo && npm run build",
+        "dev:angular": "cd examples/angular-demo && npx ng serve",
+        "build:angular": "cd examples/angular-demo && npx ng build"
+    },
+    "devDependencies": {
+        "typescript": "~5.8.3",
+        "vite": "^7.0.3"
+    }
+}

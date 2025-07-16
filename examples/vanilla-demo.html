@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Raw Web Component Demo</title>
+        <style>
+            body {
+                font-family: system-ui, -apple-system, sans-serif;
+                margin: 0;
+                padding: 2rem;
+                background-color: #f5f5f5;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background: white;
+                padding: 2rem;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+            .section {
+                margin: 2rem 0;
+                padding: 1rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 8px;
+            }
+            .button-group {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                margin-top: 1rem;
+            }
+            h1 {
+                color: #1f2937;
+                text-align: center;
+            }
+            h2 {
+                color: #374151;
+                margin-top: 0;
+            }
+            #click-counter {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: #2563eb;
+                text-align: center;
+                padding: 1rem;
+                background: #f0f9ff;
+                border-radius: 8px;
+                margin-top: 1rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Raw Web Component Demo</h1>
+            <p>
+                This demonstrates the custom button web component without any
+                framework.
+            </p>
+
+            <div class="section">
+                <h2>Button Variants</h2>
+                <div class="button-group">
+                    <custom-button
+                        variant="primary"
+                        onclick="incrementCounter()"
+                    >
+                        Primary Button
+                    </custom-button>
+                    <custom-button
+                        variant="secondary"
+                        onclick="incrementCounter()"
+                    >
+                        Secondary Button
+                    </custom-button>
+                    <custom-button
+                        variant="danger"
+                        onclick="incrementCounter()"
+                    >
+                        Danger Button
+                    </custom-button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Button Sizes</h2>
+                <div class="button-group">
+                    <custom-button size="small" onclick="incrementCounter()">
+                        Small
+                    </custom-button>
+                    <custom-button size="medium" onclick="incrementCounter()">
+                        Medium
+                    </custom-button>
+                    <custom-button size="large" onclick="incrementCounter()">
+                        Large
+                    </custom-button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Button States</h2>
+                <div class="button-group">
+                    <custom-button disabled> Disabled </custom-button>
+                    <custom-button loading> Loading </custom-button>
+                    <custom-button id="async-btn" onclick="handleAsyncAction()">
+                        Async Action
+                    </custom-button>
+                </div>
+            </div>
+
+            <div id="click-counter">Clicks: 0</div>
+        </div>
+
+        <!-- Import the web component -->
+        <script type="module" src="./src/components/custom-button.ts"></script>
+
+        <script>
+            let clickCount = 0;
+            const counterElement = document.getElementById("click-counter");
+
+            function incrementCounter() {
+                clickCount++;
+                counterElement.textContent = `Clicks: ${clickCount}`;
+            }
+
+            async function handleAsyncAction() {
+                const asyncBtn = document.getElementById("async-btn");
+                asyncBtn.setAttribute("loading", "");
+                asyncBtn.textContent = "Processing...";
+
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+
+                asyncBtn.removeAttribute("loading");
+                asyncBtn.textContent = "Async Action";
+                incrementCounter();
+            }
+
+            // Alternative: Listen for the custom event
+            document.addEventListener("button-click", (event) => {
+                console.log("Button clicked:", event.detail);
+            });
+        </script>
+    </body>
+</html>
